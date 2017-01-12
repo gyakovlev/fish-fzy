@@ -4,12 +4,7 @@ function fzy_select_history
   else
     set fzy_flags -q "$argv"
   end
-
-  history|fzy $fzy_flags|read foo
-
-  if [ $foo ]
-    commandline $foo
-  else
-    commandline ''
-  end
+  history|fzy $fzy_flags|read -l foo
+  commandline -f repaint
+  commandline $foo
 end
