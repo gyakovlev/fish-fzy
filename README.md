@@ -9,7 +9,7 @@ Based directly on the percol plugin.
 - Install fisherman https://github.com/fisherman/fisherman
 - Install this plugin 
 
-        fisher install gyakovlev/fzy
+        fisher install fzy
 
 # Usage:
 
