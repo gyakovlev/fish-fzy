@@ -1,5 +1,5 @@
 
-function __fzy_get_directories_db
+function __fzy_get_directories_db -d 'Get a list of directories using locate'
   # Locate lists all files, and directories without a '/' on the end :/
   # 1. Get only entries starting with $PWD
   # 2. Trim $PWD
@@ -14,7 +14,7 @@ function __fzy_get_directories_db
     | uniq
 end
 
-function __fzy_get_directories_raw
+function __fzy_get_directories_raw -d 'Get a list of directories using fd or find'
   if which fd >/dev/null ^/dev/null
     echo "fd"
     command fd . -t d
@@ -25,30 +25,30 @@ function __fzy_get_directories_raw
   end
 end
 
-function __fzy_get_directories
-  set -l use_db "yes"
+function __fzy_get_directories -d 'Get a list of directories'
+  set -l use_db 'yes'
   if command git rev-parse --show-toplevel >/dev/null ^/dev/null
-    set use_db "no"
+    set use_db 'no'
   else if which hg >/dev/null ^/dev/null and command hg root >/dev/null ^/dev/null
-    set use_db "no"
+    set use_db 'no'
   else
     set -l fs (df $PWD | tail -n+2 | awk '{print $1}')
     switch $fs
       case 'tmpfs'
-        set use_db "no"
+        set use_db 'no'
       case '*'
-        set use_db "yes"
+        set use_db 'yes'
     end
   end
 
   if not which locate >/dev/null ^/dev/null
-    set use_db "no"
+    set use_db 'no'
   end
 
-  set -q FZY_ENABLE_DB or set -l FZY_ENABLE_DB "no"
+  set -q FZY_ENABLE_DB or set -l FZY_ENABLE_DB 'no'
 
-  if [ "$FZY_ENABLE_DB" != "yes" ]
-    set use_db "no"
+  if [ "$FZY_ENABLE_DB" != 'yes' ]
+    set use_db 'no'
   end
 
   switch $use_db
@@ -59,7 +59,7 @@ function __fzy_get_directories
   end
 end
 
-function fzy_select_directory
+function fzy_select_directory -d 'cd to a directory using fzy'
   __fzy_get_directories | fzy | read -l foo
   if [ $foo ]
     cd $foo
