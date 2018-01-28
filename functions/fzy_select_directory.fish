@@ -14,4 +14,5 @@ function fzy_select_directory -d 'cd to a directory using fzy'
   if [ $foo ]
     cd $foo
   end
+  commandline -f repaint
 end
