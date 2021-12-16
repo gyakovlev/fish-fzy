@@ -1,6 +1,6 @@
 
 function __fzy_get_directory_list -d 'Get a list of directories using fd or find'
-  if which fd >/dev/null ^/dev/null
+  if type -q fd
     command fd . -t d
   else
     command find . \( -path '*/\\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune  -o -type d -print ^/dev/null \
